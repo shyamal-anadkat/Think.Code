@@ -1,5 +1,5 @@
 # Think.Code
-
-everyone deserves a playground. 
-this is mine. 
+<hr>
+everyone deserves a playground.<br>
+this is mine.<br>
 please no trespassing.
