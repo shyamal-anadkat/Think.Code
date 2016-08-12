@@ -1,10 +1,15 @@
 package com.zostale.ds;
 
-
+/**
+ * 
+ * @author Shyamal Anadkat
+ * Interface for TaskQueue 
+ * @param <E>
+ */
 public interface SexyQueue<E> {
-	void enqueue(E item);
-	E dequeue();
-	E peek();
+	void enqueue(Task item);
+	Task dequeue();
+	Task peek();
 	int size();
 	boolean isEmpty();
 	Object addToMap();

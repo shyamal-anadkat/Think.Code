@@ -8,26 +8,31 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-
-public class TaskQueue<E> implements SexyQueue<Object> {
-	LinkedList<Object> task;
-	private static HashMap<Integer, Object> taskMap;
+/**
+ * 
+ * @author Shyamal Anadkat
+ *
+ * @param <E>
+ */
+public class TaskQueue<E> implements SexyQueue<Task> {
+	LinkedList<Task> task;
+	private static HashMap<Integer, Task> taskMap;
 
 	public TaskQueue() {
-		this.task = new LinkedList<Object>();
+		this.task = new LinkedList<Task>();
 	}
 
-	public void enqueue(Object item) {
+	public void enqueue(Task item) {
 		this.task.addLast(item);
 	}
 
-	public Object dequeue() {
-		Object obj = this.task.getFirst();
+	public Task dequeue() {
+		Task obj = this.task.getFirst();
 		this.task.removeFirst();
 		return obj;
 	}
 
-	public Object peek() {
+	public Task peek() {
 		return this.task.getFirst();
 	}
 
@@ -39,16 +44,14 @@ public class TaskQueue<E> implements SexyQueue<Object> {
 		return this.task.isEmpty();
 	}
 
-
-	public Object addToMap() {
-		taskMap= new HashMap<Integer, Object>();
+	public HashMap<Integer,Task> addToMap() {
 		if(task.isEmpty()) return null;
+		taskMap= new HashMap<Integer, Task>();
 		for(int i = 0; i < task.size(); i++) {
 			taskMap.put(i,task.get(i));
 		}
 		return taskMap;
 	}
-
 
 	public void printTasks() {
 		if(task.isEmpty()) {
@@ -57,9 +60,13 @@ public class TaskQueue<E> implements SexyQueue<Object> {
 		else {
 			List<Integer> keys = new ArrayList<Integer>(taskMap.keySet());
 			Collections.sort(keys);
+			System.out.println("##########TASK LIST##########\n");
 			for(int key: keys) {
-				System.out.println(key + ": " + taskMap.get(key));
+				System.out.println(key+1 + ": " + taskMap.get(key).getDescription()+" || isDone: "+ taskMap.get(key).isDone
+						+" || Important: "+taskMap.get(key).isImportant);
+				System.out.println("-----------------------------------------------------------------------");
 			}
+
 		}
 	}
 }
