@@ -18,7 +18,7 @@ public class Task {
 	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	//empty constructor 
-	//public Task(){}
+	public Task(){}
 
 	public Task(boolean isDone, boolean isImportant, String task) {
 		this.isDone = isDone;

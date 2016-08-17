@@ -2,15 +2,30 @@ package com.zostale.ds;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.JCheckBox;
+import javax.swing.JToolBar;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.JLabel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 //subclass of Frame - top level container and inherits 
 //all properties from the Frame 
 public class GUI extends Frame implements ActionListener, WindowListener {
 	private Frame mainFrame;
 	private Label ibInput;
+	private Label header;
 	private TextField what;
 	private Button enter;
 	private Panel controlPanel;
+	private Checkbox yes;
+	private Checkbox no;
+	private Font font = new Font("Verdana", Font.PLAIN, 30);
+	private boolean important;
+	private boolean completed;
+
+	Task t1;
 
 
 	//initializes components
@@ -73,6 +88,17 @@ public class GUI extends Frame implements ActionListener, WindowListener {
 		what = new TextField("",25);
 		what.setFont(font);
 		add(what);
+
+		header = new Label("Important?");
+		header.setFont(font);
+		add(header);
+		addBooleanCheckbox();
+
+		header = new Label("Completed ?");
+		header.setFont(font);
+		add(header);
+		addBooleanCheckbox();
+
 		//enter button for task 
 		enter = new Button("Enter");
 		registerEnterEvent();
@@ -82,7 +108,7 @@ public class GUI extends Frame implements ActionListener, WindowListener {
 		//window listener and title and window size params
 		addWindowListener(this);
 		setTitle("Zostale Task Tracker"); // sets title 
-		setSize(1000,1000); //super Frame init window size 
+		setSize(857,789); //super Frame init window size 
 		setVisible(true); //super Frame
 
 	}
@@ -91,9 +117,57 @@ public class GUI extends Frame implements ActionListener, WindowListener {
 		enter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent r){
 				System.out.println("Enter Pressed");
+				t1 = new Task(important,completed,what.getText());
+				SexyQueue<Task> tq = new TaskQueue<Task>();
+				tq.enqueue(t1);
+				tq.addToMap();
+				tq.printTasks();
 				addSeperatorToConsole();
 			}
 		});
+	}
+
+	public void addBooleanCheckbox(){
+		yes = new Checkbox("Yes");
+		no = new Checkbox("No");
+		yes.setFont(font);
+		no.setFont(font);
+
+		yes.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				int state = e.getStateChange();
+				if(state == ItemEvent.SELECTED) {
+					System.out.println("Yes checked");
+					addSeperatorToConsole();
+					important = true;
+					completed = true;
+				}
+				else {
+					System.out.println("Yes unchecked");
+					addSeperatorToConsole();
+				}
+
+			}
+		});
+
+		no.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				int state = e.getStateChange();
+				if(state == ItemEvent.SELECTED) {
+					System.out.println("No checked");
+					addSeperatorToConsole();
+					important = false;
+					completed = false;
+				}
+				else {
+					System.out.println("No unchecked");
+					addSeperatorToConsole();
+				}
+			}
+		});
+
+		add(yes);
+		add(no);
 	}
 	public void addSeperatorToConsole(){
 		System.out.println("---------------------|");
